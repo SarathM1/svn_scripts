@@ -27,23 +27,22 @@ class svn_info():
         else:
             print 'No match'
 
-class svn_st():
+class svn_status():
     def __init__(self, each_dir):
-        self.data_row = {}
         cmd = "svn status {}".format(each_dir)
         output, err = run_cmd(cmd)
 
+        self.unv_pattern = re.compile(r'^\?.*$', re.MULTILINE)
+
         self.count = {}
-        self.count['unversioned'] =self.parse(output)
-        self.unversioned_cnt = self.parse(output, 'Revision')
+        self.parse(output)
+
 
     def parse(self, output):
-        match = re.search('^\? .*$', output, re.MULTILINE)
-        if match:
-            res = match.group()
-            print res
-        else:
-            print 'No match'
+        print output, '\n'
+        self.count['unversioned'] = len(re.findall(r'^\?.*$', output, re.MULTILINE))
+        self.count['modified'] = len(re.findall(r'^M.*$', output, re.MULTILINE))
+        self.count['deleted'] = len(re.findall(r'^D.*$', output, re.MULTILINE))
 
 def main():
     with open('./test.yml', 'r') as stream:
@@ -59,6 +58,10 @@ def main():
 
                 info = svn_info(module['path'])
                 for each_key, each_val in info.count.iteritems():
+                    row[each_key] = each_val
+
+                status = svn_status(module['path'])
+                for each_key, each_val in status.count.iteritems():
                     row[each_key] = each_val
 
                 data.append(row)
