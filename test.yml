@@ -1,0 +1,7 @@
+modules:
+  module1:
+    path: ~/project1_work
+    owner: Sarath M
+  module2:
+    path: ~/project1_work
+    owner: Sarath
