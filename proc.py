@@ -43,6 +43,10 @@ class svn_status():
         self.count['unversioned'] = len(re.findall(r'^\?.*$', output, re.MULTILINE))
         self.count['modified'] = len(re.findall(r'^M.*$', output, re.MULTILINE))
         self.count['deleted'] = len(re.findall(r'^D.*$', output, re.MULTILINE))
+        if output is not None:
+            self.count['repo_state'] = 'clean'
+        else:
+            self.count['repo_state'] = 'dirty'
 
 def main():
     with open('./test.yml', 'r') as stream:
