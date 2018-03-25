@@ -1,2 +1,2 @@
-,author,date,deleted,modified,owner,path,repo_state,revision_num,unversioned
-0,sm,"2018-03-24 13:28:10 +0530 (Sat, 24 Mar 2018)",0,0,Sarath M,~/project1_work,clean,2,0
+,added,author,date_commit,deleted_rm,deleted_svn,modified,owner,path,repo_state,revision_num,time_commit,unversioned
+0,1,sm,"Sat, 24 Mar 2018",0,1,0,Sarath M,~/project1_work,dirty,2,13:28:10,1

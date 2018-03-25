@@ -15,9 +15,19 @@ class svn_info():
         self.count = {}
         cmd = "svn info {}".format(each_dir)
         output, err = run_cmd(cmd)
-        self.count['revision_num'] =self.parse(output, 'Revision')
-        self.count['date'] =self.parse(output, 'Last Changed Date')
+        self.count['revision_num'] = self.parse(output, 'Revision')
+        temp = self.parse(output, 'Last Changed Date')
+        self.count['date_commit'],self.count['time_commit'] = self.parse_date(temp)
         self.count['author'] =self.parse(output, 'Last Changed Author')
+
+    def parse_date(self, string):
+        time_ = string.split(' ')[1]
+        m = re.search('\((\w+),(\s\w+\s\w+\s\w+)', string)
+        if m:
+            wod = m.group(1)
+            date = m.group(2).split(' ')
+        dateString = wod + ', ' + date[1] + ' ' + date[2] + ' ' + date[3]
+        return dateString, time_
 
     def parse(self, output, pattern):
         match = re.search('(?<=' + pattern + ': ).*$', output, re.MULTILINE)
@@ -39,11 +49,12 @@ class svn_status():
 
 
     def parse(self, output):
-        print output, '\n'
         self.count['unversioned'] = len(re.findall(r'^\?.*$', output, re.MULTILINE))
         self.count['modified'] = len(re.findall(r'^M.*$', output, re.MULTILINE))
-        self.count['deleted'] = len(re.findall(r'^D.*$', output, re.MULTILINE))
-        if output is not None:
+        self.count['added'] = len(re.findall(r'^A.*$', output, re.MULTILINE))
+        self.count['deleted_svn'] = len(re.findall(r'^D.*$', output, re.MULTILINE))
+        self.count['deleted_rm'] = len(re.findall(r'^!.*$', output, re.MULTILINE))
+        if len(output) == 0:
             self.count['repo_state'] = 'clean'
         else:
             self.count['repo_state'] = 'dirty'
@@ -71,7 +82,7 @@ def main():
                 data.append(row)
             df = pd.DataFrame(data)
             df.to_csv("repo_status.csv")
-            print "Data: \n", df
+            # print "Data: \n", df
         except yaml.YAMLError as exc:
             print(exc)
 
