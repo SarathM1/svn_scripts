@@ -1,4 +1,7 @@
 modules:
   module1:
-    path: ~/project1_work
-    owner: Sarath M
+    path: ~/Parvathy_svn/ParvathyA_Sprint_6_001/AutonomousDriving_ws/src/Enviroment_Perception/obstacle_map/
+    owner: Parvathy A
+  module2:
+    path: ~/Parvathy_svn/ParvathyA_Sprint_4_001/AutonomousDriving_ws/
+    owner: Parvathy

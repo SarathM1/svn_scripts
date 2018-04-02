@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/home/teroot/miniconda3/envs/jupyter/bin/python3
 import subprocess
 import yaml
 import pandas as pd
@@ -18,7 +18,7 @@ class svn_info():
         self.count['revision_num'] = self.parse(output, 'Revision')
         temp = self.parse(output, 'Last Changed Date')
         self.count['date_commit'],self.count['time_commit'] = self.parse_date(temp)
-        self.count['author'] =self.parse(output, 'Last Changed Author')
+        self.count['author'] = self.parse(output, 'Last Changed Author')
 
     def parse_date(self, string):
         time_ = string.split(' ')[1]
@@ -30,12 +30,12 @@ class svn_info():
         return dateString, time_
 
     def parse(self, output, pattern):
-        match = re.search('(?<=' + pattern + ': ).*$', output, re.MULTILINE)
+        match = re.search(b'(?<=' + bytes(pattern,'utf-8') + b': ).*$', output, re.MULTILINE)
         if match:
             res = match.group()
-            return res
+            return res.decode('utf-8')
         else:
-            print 'No match'
+            print ('No match')
 
 class svn_status():
     def __init__(self, each_dir):
@@ -49,6 +49,7 @@ class svn_status():
 
 
     def parse(self, output):
+        output = str(output)
         self.count['unversioned'] = len(re.findall(r'^\?.*$', output, re.MULTILINE))
         self.count['modified'] = len(re.findall(r'^M.*$', output, re.MULTILINE))
         self.count['added'] = len(re.findall(r'^A.*$', output, re.MULTILINE))
@@ -66,23 +67,23 @@ def main():
             dirs = yaml.load(stream, yodl.OrderedDictYAMLLoader)
             data = []
             # for each_dir in dirs:
-            for key, module in dirs['modules'].iteritems():
+            for key, module in dirs['modules'].items():
                 row = {}
                 row['path'] = module['path']
                 row['owner'] = module['owner']
 
                 info = svn_info(module['path'])
-                for each_key, each_val in info.count.iteritems():
+                for each_key, each_val in info.count.items():
                     row[each_key] = each_val
 
                 status = svn_status(module['path'])
-                for each_key, each_val in status.count.iteritems():
+                for each_key, each_val in status.count.items():
                     row[each_key] = each_val
 
                 data.append(row)
             df = pd.DataFrame(data)
+            print(df[['author']])
             df.to_csv("repo_status.csv")
-            # print "Data: \n", df
         except yaml.YAMLError as exc:
             print(exc)
 
