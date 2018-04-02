@@ -82,7 +82,6 @@ def main():
 
                 data.append(row)
             df = pd.DataFrame(data)
-            print(df[['author']])
             df.to_csv("repo_status.csv")
         except yaml.YAMLError as exc:
             print(exc)
