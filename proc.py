@@ -4,6 +4,7 @@ import yaml
 import pandas as pd
 import re
 import yodl
+import os
 
 def run_cmd(cmd):
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
@@ -49,7 +50,9 @@ class svn_status():
 
 
     def parse(self, output):
-        output = str(output)
+        # output = str(output)
+        output = output.decode('utf-8')
+        print(type(output))
         self.count['unversioned'] = len(re.findall(r'^\?.*$', output, re.MULTILINE))
         self.count['modified'] = len(re.findall(r'^M.*$', output, re.MULTILINE))
         self.count['added'] = len(re.findall(r'^A.*$', output, re.MULTILINE))
@@ -59,17 +62,25 @@ class svn_status():
             self.count['repo_state'] = 'clean'
         else:
             self.count['repo_state'] = 'dirty'
+        print(self.count['unversioned'])
+
+def parse_mod_name(path):
+    split = path.split('/')
+    if len(split[-1]) != 0:
+        name = split[-1]
+    else:
+        name = split[-2]
+    return name
 
 def main():
     with open('./test.yml', 'r') as stream:
         try:
-            # dirs = yaml.load(stream)
             dirs = yaml.load(stream, yodl.OrderedDictYAMLLoader)
             data = []
-            # for each_dir in dirs:
             for key, module in dirs['modules'].items():
                 row = {}
                 row['path'] = module['path']
+                row['name'] = parse_mod_name(row['path'])
                 row['owner'] = module['owner']
 
                 info = svn_info(module['path'])

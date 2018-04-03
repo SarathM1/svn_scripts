@@ -5,3 +5,6 @@ modules:
   module2:
     path: ~/Parvathy_svn/ParvathyA_Sprint_4_001/AutonomousDriving_ws/
     owner: Parvathy
+  module 3:
+    path: /home/teroot/Parvathy_svn/ParvathyA_001/AutonomousDriving_ws/src/Enviroment_Perception/obstacle_map
+    owner: Parvathy A
