@@ -3,8 +3,8 @@ modules:
     path: ~/Parvathy_svn/ParvathyA_Sprint_6_001/AutonomousDriving_ws/src/Enviroment_Perception/obstacle_map/
     owner: Parvathy A
   module2:
-    path: ~/Parvathy_svn/ParvathyA_Sprint_4_001/AutonomousDriving_ws/
-    owner: Parvathy
+    path: ~/Parvathy_svn/ParvathyA_Sprint_4_001/AutonomousDriving_ws/src/Enviroment_Perception/ros_yolo2/
+    owner: Sarath M
   module 3:
-    path: /home/teroot/Parvathy_svn/ParvathyA_001/AutonomousDriving_ws/src/Enviroment_Perception/obstacle_map
-    owner: Parvathy A
+    path: /home/teroot/SoumyaVS_SVN/SoumyaVS_001/AutonomousDriving_ws/src/Enviroment_Perception/lane_generator/
+    owner: Soumya VS
