@@ -52,7 +52,6 @@ class svn_status():
     def parse(self, output):
         # output = str(output)
         output = output.decode('utf-8')
-        print(type(output))
         self.count['unversioned'] = len(re.findall(r'^\?.*$', output, re.MULTILINE))
         self.count['modified'] = len(re.findall(r'^M.*$', output, re.MULTILINE))
         self.count['added'] = len(re.findall(r'^A.*$', output, re.MULTILINE))
@@ -62,7 +61,6 @@ class svn_status():
             self.count['repo_state'] = 'clean'
         else:
             self.count['repo_state'] = 'dirty'
-        print(self.count['unversioned'])
 
 def parse_mod_name(path):
     split = path.split('/')

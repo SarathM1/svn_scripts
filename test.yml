@@ -8,3 +8,9 @@ modules:
   module 3:
     path: /home/teroot/SoumyaVS_SVN/SoumyaVS_001/AutonomousDriving_ws/src/Enviroment_Perception/lane_generator/
     owner: Soumya VS
+  module 4:
+    path:  /home/teroot/RevathyBR_Sprint5002/RevathyBR_Sprint_5_002/AutonomousDriving_ws/src/Planning_Decision/Motion_Planning/motion_planning/
+    owner: Revathy BR
+  module 5:
+    path: /home/teroot/Parvathy_svn/ParvathyA_Sprint_4_002/AutonomousDriving_ws/src/Vehicle_State_Estimation/pos_est_wheelodo
+    owner: Koshi
